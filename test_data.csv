@@ -1,0 +1,51 @@
+ID,Sex,Age at MRI,WHO CNS Grade,Final pathologic diagnosis (WHO 2021),MGMT status,MGMT index,1p/19q,IDH,1-dead 0-alive,OS,EOR,Biopsy prior to imaging,BraTS21 ID,BraTS21 Segmentation Cohort,BraTS21 MGMT Cohort
+UCSF-PDGM-328,M,54,4,"Glioblastoma, IDH-wildtype",positive,1.0,intact,wildtype,0,292.0,GTR,No,BraTS2021_00723,Training,Training
+UCSF-PDGM-497,M,73,4,"Glioblastoma, IDH-wildtype",negative,0.0,intact,wildtype,0,262.0,GTR,No,BraTS2021_00603,Validation,Validation
+UCSF-PDGM-343,F,48,4,"Glioblastoma, IDH-wildtype",positive,2.0,intact,wildtype,1,183.0,STR,No,BraTS2021_00704,Training,Training
+UCSF-PDGM-239,M,57,2,"Oligodendroglioma, IDH-mutant, 1p/19q-codeleted",,,co-deletion,mutated (NOS),0,157.0,STR,No,,,
+UCSF-PDGM-153,F,68,4,"Glioblastoma, IDH-wildtype",positive,13.0,intact,wildtype,1,316.0,GTR,No,,,
+UCSF-PDGM-109,M,51,4,"Glioblastoma, IDH-wildtype",positive,16.0,intact,wildtype,1,611.0,STR,No,BraTS2021_00063,Training,Training
+UCSF-PDGM-133,F,64,4,"Glioblastoma, IDH-wildtype",positive,1.0,,wildtype,1,109.0,GTR,No,BraTS2021_00481,Training,Training
+UCSF-PDGM-146,M,57,4,"Glioblastoma, IDH-wildtype",negative,0.0,intact,wildtype,0,1392.0,GTR,No,BraTS2021_00498,Training,Training
+UCSF-PDGM-041,M,69,4,"Glioblastoma, IDH-wildtype",negative,0.0,,wildtype,0,128.0,STR,No,BraTS2021_00015,Validation,Validation
+UCSF-PDGM-262,M,44,3,"Astrocytoma, IDH-mutant",negative,0.0,intact,IDH1 p.R132S,0,1190.0,STR,No,,,
+UCSF-PDGM-531,M,36,4,"Astrocytoma, IDH-mutant",positive,15.0,intact,IDH1 p.R132H,0,21.0,STR,Yes,BraTS2021_00612,Training,Training
+UCSF-PDGM-033,M,37,4,"Glioblastoma, IDH-wildtype",positive,10.0,,wildtype,1,1489.0,STR,No,BraTS2021_00070,Training,Training
+UCSF-PDGM-351,F,61,2,"Astrocytoma, IDH-wildtype",positive,1.0,intact,wildtype,0,1226.0,STR,No,,,
+UCSF-PDGM-124,M,17,4,"Astrocytoma, IDH-mutant",negative,0.0,intact,IDH1 p.R132H,0,1299.0,STR,Yes,BraTS2021_00530,Training,Training
+UCSF-PDGM-061,F,46,4,"Astrocytoma, IDH-mutant",positive,16.0,intact,mutated (NOS),0,1907.0,STR,No,BraTS2021_00012,Training,Training
+UCSF-PDGM-149,M,66,4,"Glioblastoma, IDH-wildtype",positive,1.0,intact,wildtype,1,15.0,GTR,No,BraTS2021_00464,Training,Training
+UCSF-PDGM-285,F,60,3,"Astrocytoma, IDH-mutant",,,intact,IDH1 p.R132H,0,714.0,GTR,No,,,
+UCSF-PDGM-115,M,58,4,"Glioblastoma, IDH-wildtype",negative,0.0,,wildtype,1,430.0,GTR,No,BraTS2021_00080,Validation,Validation
+UCSF-PDGM-313,M,71,4,"Glioblastoma, IDH-wildtype",positive,16.0,intact,wildtype,0,349.0,STR,No,BraTS2021_00757,Training,Training
+UCSF-PDGM-244,F,43,2,"Oligodendroglioma, IDH-mutant, 1p/19q-codeleted",,,co-deletion,mutated (NOS),0,1714.0,STR,No,,,
+UCSF-PDGM-241,M,30,3,"Astrocytoma, IDH-mutant",,,intact,mutated (NOS),0,1382.0,STR,No,,,
+UCSF-PDGM-488,M,77,4,"Glioblastoma, IDH-wildtype",positive,17.0,intact,wildtype,0,142.0,GTR,Yes,BraTS2021_00646,Training,Training
+UCSF-PDGM-092,F,52,4,"Glioblastoma, IDH-wildtype",positive,1.0,,wildtype,1,567.0,GTR,No,BraTS2021_00009,Training,Training
+UCSF-PDGM-496,F,68,4,"Glioblastoma, IDH-wildtype",positive,16.0,intact,wildtype,0,92.0,GTR,No,BraTS2021_00611,Training,Training
+UCSF-PDGM-259,M,28,2,"Astrocytoma, IDH-mutant",,,intact,mutated (NOS),1,1421.0,STR,No,,,
+UCSF-PDGM-397,M,81,4,"Glioblastoma, IDH-wildtype",positive,9.0,intact,wildtype,1,19.0,GTR,No,BraTS2021_00690,Training,Training
+UCSF-PDGM-320,F,54,4,"Glioblastoma, IDH-wildtype",positive,2.0,intact,wildtype,0,571.0,GTR,No,BraTS2021_00772,Training,Training
+UCSF-PDGM-073,F,54,4,"Astrocytoma, IDH-mutant",positive,12.0,,mutated (NOS),0,1617.0,STR,No,BraTS2021_00079,Validation,Validation
+UCSF-PDGM-049,F,65,4,"Glioblastoma, IDH-wildtype",positive,13.0,,wildtype,0,721.0,STR,No,,,
+UCSF-PDGM-502,F,77,4,"Glioblastoma, IDH-wildtype",negative,0.0,intact,wildtype,1,59.0,GTR,No,,,
+UCSF-PDGM-195,M,58,4,"Glioblastoma, IDH-wildtype",negative,0.0,intact,wildtype,0,304.0,STR,No,BraTS2021_00510,Training,Training
+UCSF-PDGM-363,M,66,4,"Glioblastoma, IDH-wildtype",negative,0.0,intact,wildtype,1,363.0,STR,Yes,BraTS2021_00724,Training,Training
+UCSF-PDGM-376,F,57,4,"Glioblastoma, IDH-wildtype",positive,1.0,intact,wildtype,1,509.0,STR,Yes,BraTS2021_00742,Training,Training
+UCSF-PDGM-472,F,76,4,"Glioblastoma, IDH-wildtype",positive,2.0,intact,wildtype,1,38.0,biopsy,No,BraTS2021_00613,Training,Training
+UCSF-PDGM-536,F,58,4,"Glioblastoma, IDH-wildtype",positive,16.0,intact,wildtype,0,267.0,STR,No,,,
+UCSF-PDGM-366,F,56,4,"Glioblastoma, IDH-wildtype",positive,17.0,intact,wildtype,0,762.0,GTR,Yes,BraTS2021_00777,Training,Training
+UCSF-PDGM-248,M,46,2,"Astrocytoma, IDH-mutant",,,intact,IDH1 p.R132H,0,1643.0,STR,No,,,
+UCSF-PDGM-255,F,40,2,"Astrocytoma, IDH-mutant",,,intact,mutated (NOS),0,1521.0,GTR,No,,,
+UCSF-PDGM-463,F,74,4,"Glioblastoma, IDH-wildtype",positive,1.0,intact,wildtype,0,108.0,STR,No,,,
+UCSF-PDGM-507,F,61,4,"Glioblastoma, IDH-wildtype",positive,1.0,intact,wildtype,0,35.0,GTR,No,BraTS2021_00645,Training,Training
+UCSF-PDGM-486,F,54,3,"Astrocytoma, IDH-wildtype",negative,0.0,intact,wildtype,0,232.0,STR,No,,,
+UCSF-PDGM-034,M,63,4,"Glioblastoma, IDH-wildtype",negative,0.0,,wildtype,0,52.0,STR,No,BraTS2021_00088,Training,Training
+UCSF-PDGM-050,M,37,4,"Glioblastoma, IDH-wildtype",positive,7.0,,wildtype,1,554.0,GTR,No,BraTS2021_00048,Training,Training
+UCSF-PDGM-009,F,68,4,"Glioblastoma, IDH-wildtype",negative,0.0,,wildtype,1,389.0,STR,No,BraTS2021_00049,Training,Training
+UCSF-PDGM-203,M,81,4,"Glioblastoma, IDH-wildtype",negative,0.0,intact,wildtype,0,421.0,GTR,Yes,BraTS2021_00540,Training,Training
+UCSF-PDGM-345,F,46,4,"Glioblastoma, IDH-wildtype",positive,3.0,intact,wildtype,1,743.0,GTR,No,BraTS2021_00731,Training,Training
+UCSF-PDGM-311,M,57,4,"Glioblastoma, IDH-wildtype",positive,1.0,intact,wildtype,0,405.0,GTR,No,BraTS2021_00706,Training,Training
+UCSF-PDGM-019,F,50,4,"Glioblastoma, IDH-wildtype",positive,16.0,,wildtype,1,719.0,GTR,No,BraTS2021_00027,Validation,Validation
+UCSF-PDGM-182,M,65,4,"Glioblastoma, IDH-wildtype",negative,0.0,intact,wildtype,1,446.0,GTR,No,,,
+UCSF-PDGM-533,F,31,4,"Glioblastoma, IDH-wildtype",positive,16.0,intact,wildtype,0,292.0,GTR,No,BraTS2021_00652,Training,Training
