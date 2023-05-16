@@ -1,0 +1,7 @@
+# ignore all invisible files exept .gitignore and .git
+.*
+!/.gitignore
+!/.git
+
+
+
