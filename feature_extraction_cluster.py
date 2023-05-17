@@ -13,7 +13,7 @@ import numpy as np
 def get_settings():
     environment = os.environ.get('PYRADIOMICS_ENV', 'local')  # Default to 'local' if the environment variable is not set
 
-    dataset = "train" # Choose from: ["train", "validation", "test"] -- this will determine which dataset to use
+    dataset = "validation" # Choose from: ["train", "validation", "test"] -- this will determine which dataset to use
     Filter = "SquareRoot" # Choose from: ["Original", "SquareRoot"]
     
     # choose modalities from: ["T1","T2","DTI_eddy_FA", "FLAIR", "SWI", "DWI", "T1_contrast", "DTI_eddy_MD", "ADC", "ASL"]
@@ -113,6 +113,7 @@ def main():
     for cImg in acquisitions:
         img_type = cImg 
         feature_data = pd.DataFrame() # Initialize feature data df
+        feature_data_sqrroot = pd.DataFrame() # Initialize feature data df
         errors_id = pd.DataFrame()
         count = 0
 
@@ -127,13 +128,13 @@ def main():
                 extractor = apply_filters_on_images(extractor, Filter)
                 featureVector = calculate_features(extractor, Image, Label)
                 
-                if Filter == "Original":
-                    first_order_features = {key: value for key, value in featureVector.items() if key.startswith('original_firstorder_')}
-                
-                if Filter == "SquareRoot":
-                    first_order_features = {key: value for key, value in featureVector.items() if key.startswith('squareroot_firstorder_')}
+                original_features = {key: value for key, value in featureVector.items() if key.startswith('original_firstorder_')}
+                feature_data = feature_data.append(pd.DataFrame(original_features, index=[patient_id]))
 
-                feature_data = feature_data.append(pd.DataFrame(first_order_features, index=[patient_id]))
+                if Filter == "SquareRoot":
+                    sqrroot_features = {key: value for key, value in featureVector.items() if key.startswith('squareroot_firstorder_')}
+                    feature_data_sqrroot = feature_data_sqrroot.append(pd.DataFrame(sqrroot_features, index=[patient_id]))
+
             except Exception as e:
                 count += 1
                 tb_str = traceback.format_exception(etype=type(e), value=e, tb=e.__traceback__)
@@ -143,7 +144,12 @@ def main():
 
         print(f'Number of errors occurred: {count} --> patients affected by error {set(lost_patients)}')
          # Save the feature_data DataFrame as a CSV file in the base_dir
-        feature_data.to_csv(os.path.join(base_dir, f"{dataset}_firstorder_{Filter}_{img_type}.csv"))        
+        feature_data.to_csv(os.path.join(base_dir, f"{dataset}_firstorder_original_{img_type}.csv"))    
+
+        if Filter == "SquareRoot":
+            feature_data_sqrroot.to_csv(os.path.join(base_dir, f"{dataset}_firstorder_sqrroot_{img_type}.csv"))
+
+
             
 if __name__ == "__main__":
     main()
