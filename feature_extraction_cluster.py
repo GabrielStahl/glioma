@@ -47,7 +47,7 @@ def extract_features(params, Image, Label, patient_id):
         result = extractor.execute(Image, Label)  
         return extractor, result
     except Exception as e:
-        print(f"Could not extract features for patient {patient_id} retrying with label-value=2")
+        print(f"Could not extract features for patient {patient_id} Reason: {str(e)} \nretrying with label-value=2")
         settings = {'label': 2}
         extractor = radiomics.featureextractor.RadiomicsFeatureExtractor(additionalInfo=True, **settings)
         result = extractor.execute(Image, Label)  
