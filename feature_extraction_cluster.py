@@ -1,62 +1,36 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# # Feature extraction
-
-# This example shows how to use the radiomics package and the feature extractor.
-# The feature extractor handles preprocessing, and then calls the needed featureclasses to calculate the features.
-# It is also possible to directly instantiate the feature classes. However, this is not recommended for use outside debugging or development. For more information, see `helloFeatureClass`.
-
-# In[3]:
-
-
 from __future__ import print_function
 import sys
 import os
-import logging
 import six
 from radiomics import featureextractor, getFeatureClasses
 import radiomics
 import SimpleITK as sitk
-import matplotlib.pyplot as plt
 import pandas as pd
 import traceback
 from scipy.stats import pearsonr
 import numpy as np
-import seaborn as sns
-
-
-# ## Define functions
-
-# In[11]:
-
 
 def get_settings():
     environment = os.environ.get('PYRADIOMICS_ENV', 'local')  # Default to 'local' if the environment variable is not set
 
+    dataset = "train" # Choose from: ["train", "validation", "test"] -- this will determine which dataset to use
+    Filter = "SquareRoot" # Choose from: ["Original", "SquareRoot"]
+    
+    # choose modalities from: ["T1","T2","DTI_eddy_FA", "FLAIR", "SWI", "DWI", "T1_contrast", "DTI_eddy_MD", "ADC", "ASL"]
+    acquisitions = ["T1","T2","DTI_eddy_FA", "FLAIR", "SWI", "DWI", "T1_contrast", "DTI_eddy_MD", "ADC", "ASL"] 
+
     if environment == 'local':
         base_dir = "/Users/Gabriel/Desktop/MSc_Dissertation/pyRadiomics/Data/"
         params = "/Users/Gabriel/Desktop/MSc_Dissertation/pyRadiomics/Params.yaml"
-        train_df = pd.read_csv("/Users/Gabriel/Desktop/MSc_Dissertation/pyRadiomics/train_data.csv") # Get data from training dataset
+        train_df = pd.read_csv("/Users/Gabriel/Desktop/MSc_Dissertation/pyRadiomics/Training/" + dataset + "_data.csv") 
     elif environment == 'cluster':
         base_dir = "/cluster/project2/UCSF_PDGM_dataset/UCSF-PDGM-v3/"
         params = "/home/goliveir/pyRadiomics/Params.yaml"
-        train_df = pd.read_csv("/home/goliveir/pyRadiomics/validation_data.csv") # Get data from training dataset -- change path to validation or test set to extract those features
+        train_df = pd.read_csv("/home/goliveir/pyRadiomics/" + dataset + "_data.csv") 
     else:
         raise ValueError("Unknown environment: please set PYRADIOMICS_ENV to 'local' or 'cluster'")
 
-    return base_dir, params, train_df, environment
-
-def setup_logging(): # Create logfile called testLog.txt
-    logger = radiomics.logger
-    logger.setLevel(logging.DEBUG) # set level to DEBUG to include debug log messages in log file
-
-    # Write out all log entries to a file
-    handler = logging.FileHandler(filename='testLog.txt', mode='w')
-    formatter = logging.Formatter('%(levelname)s:%(name)s: %(message)s')
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
-    return logger
+    return base_dir, params, train_df, environment, dataset, Filter, acquisitions
 
 def read_image_and_label(image_path, label_path, patient_id):
     Image = sitk.ReadImage(image_path)
@@ -80,22 +54,11 @@ def extract_features(params, Image, Label, patient_id):
         return extractor, result
     
 
-def apply_filters_on_images(extractor):
+def apply_filters_on_images(extractor, Filter):
 
     # By default, only 'Original' (no filter applied) is enabled. Optionally enable some image types:
-
-    # extractor.enableImageTypeByName('Wavelet')
-    # extractor.enableImageTypeByName('LoG', customArgs={'sigma':[3.0]})
-    # extractor.enableImageTypeByName('Square')
-    # extractor.enableImageTypeByName('SquareRoot')
-    # extractor.enableImageTypeByName('Exponential')
-    # extractor.enableImageTypeByName('Logarithm')
-
-    # Alternative; set filters in one operation 
-    # This updates current enabled image types, i.e. overwrites custom settings specified per filter. 
-    # However, image types already enabled, but not passed in this call, are not disabled or altered.
-
-    # extractor.enableImageTypes(Wavelet={}, LoG={'sigma':[3.0]})
+    if Filter == "SquareRoot":
+        extractor.enableImageTypeByName('SquareRoot')
 
     print('Filters applied on the image:')
     for imageType in extractor.enabledImagetypes.keys():
@@ -142,24 +105,13 @@ def fetch_data(base_dir, patient_id, img_type):
     label_path = os.path.join(data_dir, label_filename)
     
     return image_path, label_path
-
-def view_data(Image, Label):
-    plt.figure(figsize=(20,20))
-    plt.subplot(2,2,1)
-    plt.imshow(sitk.GetArrayFromImage(Image)[109,:,:], cmap="gray")
-    plt.title("Brain #1")
-    plt.subplot(2,2,2)
-    plt.imshow(sitk.GetArrayFromImage(Label)[109,:,:])        
-    plt.title("Segmentation #1")
-    plt.show()
     
 def main():
-    logger = setup_logging()
-    base_dir, params, train_df, environment = get_settings()
-    aquisitions = ["T2"] # Adapt according to needs
+    base_dir, params, train_df, environment, dataset, Filter, acquisitions = get_settings()
+    lost_patients = []
     
-    for cImg in aquisitions:
-        img_type = cImg # "T1_contrast" # choose from: DTI_eddy_FA, FLAIR, SWI, T1, T2, DWI, T1_contrast, DTI_eddy_MD
+    for cImg in acquisitions:
+        img_type = cImg 
         feature_data = pd.DataFrame() # Initialize feature data df
         errors_id = pd.DataFrame()
         count = 0
@@ -171,27 +123,32 @@ def main():
 
             try:
                 Image, Label = read_image_and_label(image_path, label_path, patient_id)
-                if environment == 'local': view_data(Image, Label)
                 extractor, result = extract_features(params, Image, Label, patient_id) # Here it goes wrong if label < 3
-                extractor = apply_filters_on_images(extractor)
+                extractor = apply_filters_on_images(extractor, Filter)
                 featureVector = calculate_features(extractor, Image, Label)
-                first_order_features = {key: value for key, value in featureVector.items() if key.startswith('original_firstorder_')}
+                
+                if Filter == "Original":
+                    first_order_features = {key: value for key, value in featureVector.items() if key.startswith('original_firstorder_')}
+                
+                if Filter == "SquareRoot":
+                    first_order_features = {key: value for key, value in featureVector.items() if key.startswith('squareroot_firstorder_')}
+
                 feature_data = feature_data.append(pd.DataFrame(first_order_features, index=[patient_id]))
             except Exception as e:
                 count += 1
                 tb_str = traceback.format_exception(etype=type(e), value=e, tb=e.__traceback__)
                 tb_str = ''.join(tb_str)
-                print(f"Could not find data for patient {patient_id}: {str(e)}\nTraceback:\n{tb_str}")
+                print(f"Error for patient {patient_id}: {str(e)}\nTraceback:\n{tb_str}")
+                lost_patients.append(patient_id)
 
-        print(f'Number of errors occurred: {count}')
+        print(f'Number of errors occurred: {count} --> patients affected by error {set(lost_patients)}')
          # Save the feature_data DataFrame as a CSV file in the base_dir
-        feature_data.to_csv(os.path.join(base_dir, f"extracted_firstorder_features_{img_type}.csv"))        
+        feature_data.to_csv(os.path.join(base_dir, f"{dataset}_firstorder_{Filter}_{img_type}.csv"))        
             
 if __name__ == "__main__":
     main()
 
 
-# In[ ]:
 
 
 
