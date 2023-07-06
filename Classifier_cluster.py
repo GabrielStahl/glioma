@@ -70,7 +70,6 @@ def load_data(train_features_paths, train_data_path, validation_features_paths, 
     train_meta_data["ID"] = train_meta_data["ID"].str.extract('(\d+)').astype(int)
     train_meta_data.set_index("ID", inplace=True)
     train_merged_data = train_meta_data[['Sex', 'Age at MRI', 'WHO CNS Grade', 'IDH']].merge(train_features_data, left_index=True, right_index=True)
-    train_merged_data = train_merged_data.drop(106)    
     
     if normalize:
         columns_to_exclude = ['ID', 'Sex','WHO CNS Grade', 'IDH']
